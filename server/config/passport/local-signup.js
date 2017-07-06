@@ -10,10 +10,11 @@ module.exports = new PassportLocalStrategy({
     const user = {
         email: email.trim(),
         password: password.trim(),
-        name: req.body.name.trim()
+        firstName: req.body.firstName.trim(),
+        lastName: req.body.lastName.trim()
     }
    User.findOne({email: user.email}).then(existingUser=>{
-       console.log(existingUser)
+
         if (existingUser) {
             return done('E-mail already exists!')
         }
@@ -24,6 +25,8 @@ module.exports = new PassportLocalStrategy({
         User.create({
             email: user.email,
             salt: salt,
+            firstName: user.firstName,
+            lastName: user.lastName,
             hashedPass: hashedPassword
         }).then(user => {
             return done(null)

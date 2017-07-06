@@ -38,7 +38,7 @@ console.log(user);
     // create a token string
     const token = jwt.sign(payload, 's0m3 r4nd0m str1ng')
     const data = {
-      name: savedUser.name
+      firstName: savedUser.firstName
     }
 
     return done(null, token, data)

@@ -5,7 +5,8 @@ const REQUIRED_VALIDATION_MESSAGE = '{PATH} is required'
 
 let userSchema = new mongoose.Schema({
   email: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
-
+  firstName: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
+  lastName: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
   salt: String,
   hashedPass: String,
   roles: [String]
