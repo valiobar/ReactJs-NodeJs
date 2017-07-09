@@ -1,14 +1,27 @@
 class Auth {
-    static authenticateUser (token) {
+    static saveUser(user) {
+        window.localStorage.setItem('user', JSON.stringify(user))
+    }
+
+    static getUser() {
+        return JSON.parse(window.localStorage.getItem('user'))
+    }
+    static removeUser() {
+        window.localStorage.removeItem('user')
+    }
+    static authenticateUser(token) {
         window.localStorage.setItem('token', token)
     }
-    static isUserAuthenticated () {
+
+    static isUserAuthenticated() {
         return window.localStorage.getItem('token') !== null
     }
-    static deauthenticateUser () {
+
+    static deauthenticateUser() {
         window.localStorage.removeItem('token')
     }
-    static getToken () {
+
+    static getToken() {
         return window.localStorage.getItem('token')
     }
 }

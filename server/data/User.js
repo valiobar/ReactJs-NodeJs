@@ -26,10 +26,12 @@ module.exports.seedAdminUser = () => {
     if (users.length > 0) return
 
     let salt = encryption.generateSalt()
-    let hashedPass = encryption.generateHashedPassword(salt, 'mega stra5nata par0la')
+    let hashedPass = encryption.generateHashedPassword(salt, '123456')
 
     User.create({
-      email: 'Admin',
+      email: 'Admin@admin.com',
+      lastName:'admin',
+      firstName:'admin',
       salt: salt,
       hashedPass: hashedPass,
       roles: ['Admin']

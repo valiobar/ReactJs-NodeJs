@@ -17,14 +17,14 @@ function validateSignupForm (payload) {
     errors.password = 'Password must have at least 4 characters.'
   }
 
-  if (!payload || typeof payload.firstName !== 'string' || payload.firstName.trim().length === 0) {
+  if (!payload || typeof payload.firstName !== 'string' || payload.firstName.trim().length <3) {
     isFormValid = false
-    errors.name = 'Please provide your first name.'
+    errors.firstName = 'Please provide your first name.'
   }
 
-  if (!payload || typeof payload.lastName !== 'string' || payload.lastName.trim().length === 0) {
+  if (!payload || typeof payload.lastName !== 'string' || payload.lastName.trim().length <3) {
     isFormValid = false
-    errors.name = 'Please provide your last name.'
+    errors.lastName = 'Please provide your last name.'
   }
 
   if (!isFormValid) {
@@ -93,7 +93,9 @@ module.exports = {
         success: true,
         message: 'You have successfully signed up! Now you should be able to log in.'
       })
+
     })(req, res, next)
+
   }),
   loginGet: (req, res) => {
     console.log(res.locals.currentUser);
@@ -139,6 +141,11 @@ module.exports = {
         user: userData
       })
     })(req, res, next)
-  })
+  }),
+
+  getProfile:(req, res)=>{
+    res.json("uhuuu")
+
+  }
 
 }

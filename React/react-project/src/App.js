@@ -9,9 +9,7 @@ class App extends Component {
     return (
 
       <div className="App">
-          <Col s={4}>
-              <Preloader size='big'/>
-          </Col>
+
           <Header/>
 
           <Routes />

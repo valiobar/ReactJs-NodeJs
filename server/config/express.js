@@ -17,7 +17,7 @@ module.exports = (app) => {
     app.use(bodyParser.json())
 
     app.use(passport.initialize())
-    app.use(cors())
+   app.use(cors())
 
     passport.use('local-signup', localSignupStrategy)
     passport.use('local-login', localLoginStrategy)
