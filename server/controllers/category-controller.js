@@ -33,6 +33,7 @@ module.exports = {
 
     categoryCreate: (req, res) => {
         let newCategoty = req.body;
+        console.log('newCategoty : '+newCategoty)
 
        let  validationResult=validateCategoryModel(newCategoty)
 
@@ -49,26 +50,39 @@ module.exports = {
             parent_category: newCategoty.parent_category||null,
             subCategories:newCategoty.subCategories||null,
         }).then((cat)=>{
+            console.log(cat.parent_category)
             if(cat.parent_category){
                 Category.findById(cat.parent_category).then((parentCategory)=>{
                  console.log(parentCategory);
                     if(parentCategory.subCategories==null){
                         parentCategory.subCategories=[]
                     }
+                    console.log(cat.parent_category)
                     parentCategory.subCategories.push(cat._id);
                     parentCategory.save().then((result)=>{
                         console.log('sccess')
                         console.log(result)
                         return res.status(200).json({
                             success: true,
-                            message: 'You have successfully signed up! Now you should be able to log in.'
+                            message: 'You have successfully create category ',
+                            data:cat
                         })
                     })
+                })
+            } else{
+                return res.status(200).json({
+                    success: true,
+                    message: 'You have successfully create category ',
+                    data:cat
                 })
             }
 
         })
-            .catch(error=>console.log(error))
+            .catch(error=>res.status(200).json({
+                success: false,
+                message:error.message,
+                errors: error
+            }))
 
     }
 }
