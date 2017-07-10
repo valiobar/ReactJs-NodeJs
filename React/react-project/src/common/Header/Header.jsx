@@ -7,7 +7,7 @@ class Header extends React.Component {
         super(props)
 
         this.state = {
-            username: Auth.getUser().firstName
+            username:""
         }
         this.handelUserLoggedIn = this.handelUserLoggedIn.bind(this)
         userStore.on(userStore.evetTypes.USER_LOGED, this.handelUserLoggedIn)
@@ -19,9 +19,13 @@ class Header extends React.Component {
             this.setState({username: data.user.firstName})
         }
     }
+    componentWillMount(){
+        if(Auth.getUser()){
+            this.setState({username: Auth.getUser().firstName})
+        }
+    }
 
-
-    componentWillUnmounth() {
+    componentWillUnmount() {
         userStore.removeListener(userStore.evetTypes.USER_LOGED, this.handelUserLoggedIn)
     }
 

@@ -2,7 +2,10 @@ import React from 'react'
 import {Collapsible, CollapsibleItem,Collection,CollectionItem } from 'react-materialize'
 import styles from './CategoryList.css'
 class CategoryList extends React.Component{
-  constructor(props){
+
+    renderlist=[]
+
+    constructor(props){
     super(props)
 
 
@@ -10,25 +13,23 @@ class CategoryList extends React.Component{
   }
 
   renderCategory(category,msg){
-    console.log(msg)
- console.log( category.subCategories)
+  this.renderlist.push(  (<p>{category.name}</p>))
+      console.log(this.renderlist)
     if(category.subCategories) {
-      console.log(category)
 
-      console.log('in rec')
       let subCat=[]
       category.subCategories.map(catId=>{
         subCat=this.props.categories.filter(cat=>{return cat._id == catId})
-
-        return this.renderCategory(subCat[0],'recursive')
+        subCat.map(sub=>this.renderCategory(sub))
       })
     }
-    console.log('returning- 'category.name )
-    return (
-        <p>{'>'.repeat(2)+category.name}</p>
-    )
-  }
 
+  }
+    componentWillMount(){
+      console.log("will mo")
+        this.props.categories.filter(cat=>{return cat.parent_category == null}).map(cat=>this.renderCategory(cat))
+
+    }
 
 
 

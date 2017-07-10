@@ -5,7 +5,7 @@ let rootPath = path.normalize(path.join(__dirname, '/../../'))
 module.exports = {
   development: {
     rootPath: rootPath,
-    db: 'mongodb://localhost:27017/reactApp',
+    db: 'mongodb://valiobar:123456@ds153682.mlab.com:53682/online-shop',
     port: 5000
 
   },
