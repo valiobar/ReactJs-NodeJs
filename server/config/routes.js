@@ -9,5 +9,10 @@ module.exports = (app) => {
   app.get('/api/admin/panel',bodyParser.json(),auth.adminAuth, controllers.users.getProfile)
   app.post('/api/admin/category/create',bodyParser.json(),auth.adminAuth, controllers.category.categoryCreate)
   app.get('/api/admin/category/all',bodyParser.json(),auth.adminAuth, controllers.category.gatAll)
+  app.post('/api/admin/product/create',bodyParser.json(),auth.adminAuth, controllers.products.productCreate)
+
+
+
+
   app.get('/',bodyParser.json(), (req,res)=>res.send('work'))
 }

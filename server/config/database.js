@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../data/User')
+const Product = require('../data/Product')
 const Category = require('../data/Category')
 mongoose.Promise = global.Promise
 

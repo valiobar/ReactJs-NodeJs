@@ -12,6 +12,8 @@
     "react-materialize": "1.0.3",
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
+    "sha1": "^1.1.1",
+    "superagent": "^3.5.2",
     "toastr": "^2.1.2"
   },
   "scripts": {

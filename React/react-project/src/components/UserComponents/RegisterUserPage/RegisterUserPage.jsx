@@ -36,6 +36,8 @@ class RegisterUserPage extends React.Component {
 
     }
 
+
+
     handleInputChange(event) {
         formOnChangeHandler(event,'user',this)
         // const target = event.target

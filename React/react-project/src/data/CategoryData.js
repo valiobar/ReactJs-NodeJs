@@ -1,7 +1,7 @@
 
 import apiCalls from '../helpers/apiCalls/apiCalls'
 
-class UserData {
+class CategoryData {
      baseUrl = 'http://localhost:5000/api/users/register'
 
     static createCategory(category,){
@@ -17,4 +17,4 @@ class UserData {
 
 
 }
-export default UserData
+export default CategoryData
