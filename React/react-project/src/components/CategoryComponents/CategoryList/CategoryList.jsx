@@ -1,6 +1,7 @@
 import React from 'react'
-import {Collapsible, CollapsibleItem,Collection,CollectionItem } from 'react-materialize'
+import {Collapsible, CollapsibleItem,Button } from 'react-materialize'
 import styles from './CategoryList.css'
+
 class CategoryList extends React.Component{
 
     renderlist=[]
@@ -12,23 +13,34 @@ class CategoryList extends React.Component{
     this.renderCategory=this.renderCategory.bind(this)
   }
 
-  renderCategory(category,msg){
-  this.renderlist.push(  (<p>{category.name}</p>))
-      console.log(this.renderlist)
-    if(category.subCategories) {
+  renderCategory(category,indentation){
+  this.renderlist.push(  (
+      <CollapsibleItem header={category.name} key={category._id} style={{marginLeft  : 15*indentation+'px'}}>
+     <ItemComponent item={category} onClickButton={this.props.onCategorySelect}></ItemComponent>
+      </CollapsibleItem>))
 
+    if(category.subCategories) {
+        indentation++;
       let subCat=[]
       category.subCategories.map(catId=>{
         subCat=this.props.categories.filter(cat=>{return cat._id == catId})
-        subCat.map(sub=>this.renderCategory(sub))
+        subCat.map(sub=>this.renderCategory(sub,indentation))
       })
     }
 
   }
-    componentWillMount(){
-      console.log("will mo")
-        this.props.categories.filter(cat=>{return cat.parent_category == null}).map(cat=>this.renderCategory(cat))
 
+  renderCategories(){
+      this.props.categories.filter(cat=>{return cat.parent_category == null}).map(cat=>this.renderCategory(cat,0))
+  }
+    componentWillMount(){
+this.renderCategories()
+
+
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log(this.props.categories)
+       this.renderCategories()
     }
 
 
@@ -37,42 +49,25 @@ class CategoryList extends React.Component{
 
 
     return (
-         <div className={styles.container}>
-           {this.props.categories.filter(cat=>{return cat.parent_category == null}).map(cat=>this.renderCategory(cat,1))}
-        {/* <Collapsible popout >
-         <CollapsibleItem header='First' icon='filter_drama'>
-         <Collapsible popout>
-         <CollapsibleItem header='First' icon='filter_drama'>
-         Lorem ipsum dolor sit amet.
-         </CollapsibleItem>
-         <CollapsibleItem header='First' icon='filter_drama'>
-         Lorem ipsum dolor sit amet.
-         </CollapsibleItem>
-         </Collapsible>
-         <CollapsibleItem header='First' icon='filter_drama'>
-         Lorem ipsum dolor sit amet.
-         </CollapsibleItem>
+             <Collapsible popout>
+                 {this.renderlist}
+             </Collapsible>
 
-         </CollapsibleItem>
-         <CollapsibleItem header='Second' icon='place'>
-         Lorem ipsum dolor sit amet.
-         </CollapsibleItem>
-         <CollapsibleItem header='Third' icon='whatshot'>
-         Lorem ipsum dolor sit amet.
-         </CollapsibleItem>
-         </Collapsible>*/}
-           <Collection>
-             <CollectionItem>AlaBala<Collection>
-               <CollectionItem>Alvin</CollectionItem>
-               <CollectionItem>Alvin</CollectionItem>
-               <CollectionItem>Alvin</CollectionItem>
-             </Collection></CollectionItem>
-             <CollectionItem>Alvin</CollectionItem>
-             <CollectionItem>Alvin</CollectionItem>
-             <CollectionItem>Alvin</CollectionItem>
-           </Collection>
-         </div>
     )
   }
+}
+
+
+const ItemComponent = (props) => {
+    let item = props.item;
+    let productsCount = item.products.length
+    let buttonTriger = props.onClickButton;
+
+    return (
+        <div>
+          <h6>{item.name}</h6> <span>Product : {productsCount}</span>
+            <Button modal="confirm" onClick={()=>buttonTriger(item) } waves='green'>Create</Button>
+        </div>
+    );
 }
 export default CategoryList

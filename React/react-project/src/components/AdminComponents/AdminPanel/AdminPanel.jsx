@@ -4,20 +4,22 @@ import categoryStore from '../../../stores/CategoryStore'
 import style from './AdminPanel.css'
 import CategoryForm from '../../CategoryComponents/CategoryForm'
 import CategoryList from '../../CategoryComponents/CategoryList'
+import $ from 'jquery'
 
 class AdminPanel extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       categories: [],
-      componentToRender:''
+      componentToRender:'',
+       categoryToUpdate:{}
 
     }
     this.handleCategoryCreated = this.handleCategoryCreated.bind(this)
     categoryStore.on(categoryStore.eventTypes.CATEGORY_CREATED, this.handleCategoryCreated)
     this.handleCategoriesFetcked = this.handleCategoriesFetcked.bind(this)
     categoryStore.on(categoryStore.eventTypes.ALL_CATEGORIES_FETCHED, this.handleCategoriesFetcked)
-
+    this.onCategorySelect=this.onCategorySelect.bind(this)
   }
 
   handleCategoriesFetcked(data){
@@ -26,18 +28,25 @@ class AdminPanel extends React.Component{
   }
 
   handleCategoryCreated(data){
-   console.log('admin handel new cat')
+      console.log(data.data)
+   let categoriesUpdated = this.state.categories;
+      categoriesUpdated.push(data.data)
+      this.setState({categories:categoriesUpdated},()=> console.log(this.state.categories))
+
   }
   componentWillMount(){
   categoryActions.gatAll()
   }
 
   componentWillUnmount() {
-
     categoryStore.removeListener(categoryStore.eventTypes.CATEGORY_CREATED, this.handleCategoryCreated)
 
   }
+  onCategorySelect(item){
+    $('#modalTrigger').click()
+      this.setState({categoryToUpdate:item},()=>$('#modalTrigger').click())
 
+  }
   selectComponent(event){
 
     this.setState({componentToRender:event.target.getAttribute('name')})
@@ -58,7 +67,13 @@ class AdminPanel extends React.Component{
           </div>
         </div>
           <div className="adminComponents col-md-9">
-            {this.state.componentToRender=="CategoryList" && <CategoryList categories={this.state.categories}/>}
+            {this.state.componentToRender=="CategoryList" &&(
+                <div>
+                  <CategoryForm categoryToUpdate={this.state.categoryToUpdate} categories={this.state.categories}/>
+                <CategoryList onCategorySelect={this.onCategorySelect} categories={this.state.categories}/>
+
+                  </div>
+            )}
 
           </div>
 
