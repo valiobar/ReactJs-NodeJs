@@ -43,3 +43,6 @@ span.caret{
   display: table;
   margin: 0 auto;
 }
+.navbar{
+  z-index: 15;
+}

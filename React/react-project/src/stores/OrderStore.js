@@ -12,7 +12,7 @@ class OrderStore extends EventEmitter {
 
 
     createOrder(userId) {
-        console.log(JSON.stringify(userId));
+
         orderData.createOrder(userId)
             .then((data) => {
                 console.log(data)

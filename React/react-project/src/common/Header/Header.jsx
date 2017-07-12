@@ -31,15 +31,22 @@ class Header extends React.Component {
 
     render() {
         return (
+
             <nav className="navbar navbar-inverse">
                 <div className="container-fluid">
                     <div className="navbar-header">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNav" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
                         <Link to="/" className="navbar-brand">WebSiteName</Link>
                     </div>
+                    <div className="collapse navbar-collapse" id="myNav">
                     <ul className="nav navbar-nav">
                         <li className="active"><Link to="/">Home</Link></li>
-                        <li><Link to="/">Page 1</Link></li>
-                        <li><Link to="/">Page 2</Link></li>
+
                     </ul>
                     {Auth.isUserAuthenticated() ? (<ul className="nav navbar-nav navbar-right">
                         <li><div >
@@ -66,9 +73,13 @@ class Header extends React.Component {
                        </ul>)}
 
 
-
+                    </div>
                 </div>
             </nav>
+
+
+
+
 
         )
     }

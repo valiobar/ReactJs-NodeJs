@@ -111,38 +111,37 @@ module.exports = {
 
     createOrder(req, res){
         let userId = req.body.userId
-        let total=0;
-        let order ={
-            products:[],
-            client,
-            totalSum:0
+
+        let order = {
+            products: [],
+            client:null,
+            totalSum: 0
         }
         console.log(userId)
         User.findById(userId)
             .then(user => {
-                order.client.push(user._id)
+                order.client=user._id
                 let basket = user.shoppingBasket
                 let itemsPromises = []
                 basket.map(itemId=>itemsPromises.push(Product.findById(itemId)))
                 Promise.all(itemsPromises).then(items=> {
-                  items.map(item=>{
-                      order.totalSum=+item.price
-                      order.products.push(item._id)
-                  })
-                    Order.create(order).then(order=>{
+                    items.map(item=> {
+                        order.totalSum += item.price
+                        order.products.push(item._id)
+                    })
+                    Order.create(order).then(order=> {
                         return res.status(200).json({
                             success: true,
-                            message: 'You have successfully submitOrder ',
-                            data:order
+                            message: 'You have successfully submit Order ',
+                            data: order
                         })
-                        }
-
-                    )
+                    })
+                        .catch(err=>console.log(err))
                 })
-
+                    .catch(err=>console.log(err))
 
             })
-
+            .catch(err=>console.log(err))
 
     },
 

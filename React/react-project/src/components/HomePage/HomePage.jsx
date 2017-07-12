@@ -17,13 +17,27 @@ class HomePage extends React.Component{
 
     this.handleItemAddToBasket = this.handleItemAddToBasket.bind(this)
     userStore.on(userStore.evetTypes.ITEM_ADDED_TO_BASKET, this.handleItemAddToBasket)
+    this.handleOrderCreated = this.handleOrderCreated.bind(this)
+    orderStore.on(orderStore.eventTypes.ORDER_CREATED, this.handleOrderCreated)
   }
 
   componentWillUnmount() {
     userStore.removeListener(userStore.evetTypes.ITEM_ADDED_TO_BASKET, this.handleItemAddToBasket)
-
+    orderStore.removeListener(orderStore.eventTypes.ORDER_CREATED, this.handleOrderCreated)
 
   }
+  handleOrderCreated(data){
+    if (!data.success) {
+
+      toastr.error(data.message)
+      return
+    }
+    toastr.success(data.message)
+
+  }
+
+
+
   handleItemAddToBasket(data){
     if (!data.success) {
 

@@ -39,7 +39,7 @@ class CategoryList extends React.Component {
     }
 
     componentWillMount() {
-        this.renderCategories()
+      //  this.renderCategories()
 
 
     }
@@ -51,7 +51,7 @@ class CategoryList extends React.Component {
 
 
     render() {
-
+        this.renderCategories()
 
         return (
             <Collapsible popout>
@@ -71,7 +71,7 @@ const ItemComponent = (props) => {
     return (
         <div>
             <h6>{item.name}</h6> <span>Product : {productsCount}</span>
-            <Button modal="confirm" onClick={() => buttonTriger(item) } waves='green'>Create</Button>
+            <Button modal="confirm" onClick={() => buttonTriger(item) } waves='green'>Edit</Button>
         </div>
     );
 }
