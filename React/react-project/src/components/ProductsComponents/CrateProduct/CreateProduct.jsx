@@ -25,10 +25,10 @@ class CrateProduct extends React.Component {
                 price: ''
             }
         }
-
-        this.handleProductCreated=this.handleProductCreated.bind(this)
+        console.log('create producty ')
+        this.handleProductCreated = this.handleProductCreated.bind(this)
         productStore.on(productStore.eventTypes.PRODUCT_CREATED, this.handleProductCreated)
-        this.handleImageUpload=this.handleImageUpload.bind(this)
+        this.handleImageUpload = this.handleImageUpload.bind(this)
         productStore.on(productStore.eventTypes.IMAGE_UPLOADED, this.handleImageUpload)
     }
 
@@ -37,14 +37,14 @@ class CrateProduct extends React.Component {
         productStore.removeListener(productStore.eventTypes.PRODUCT_CREATED, this.handleProductCreated)
     }
 
-    handleImageUpload(data){
-        console.log(data)
-         let product = this.state.product;
+    handleImageUpload(data) {
+
+        let product = this.state.product;
         product.images.push(data.secure_url)
-        this.setState({product:product})
+        this.setState({product: product})
     }
 
-    handleProductCreated(data){
+    handleProductCreated(data) {
         if (!data.success) {
             if (data.errors) {
                 this.setState({error: data.errors})
@@ -58,7 +58,6 @@ class CrateProduct extends React.Component {
     }
 
     uploadImage() {
-        console.log($('#image').prop('files')[0])
         productActions.uploadImage($('#image').prop('files')[0]);
         // productActions.createProduct($('#image').val());
     }
@@ -70,9 +69,10 @@ class CrateProduct extends React.Component {
     }
 
     createProduct() {
+        console.log("Product form crated")
         let validationResult = productValidator(this.state.product)
         this.setState({error: validationResult.errors})
-        if(validationResult.isValid){
+        if (validationResult.isValid) {
             productActions.createProduct(this.state.product)
             $('#closeProductModal').click()
         }
@@ -100,33 +100,28 @@ class CrateProduct extends React.Component {
 
     render() {
 
+        let renderImage = [];
+        let imagesCount = this.state.product.images.length
+        if (imagesCount > 0) {
+            renderImage.push(<Image imageType="card" src={this.state.product.images[0]}/>)
+            if (this.state.product.images.length > 1) {
+                this.state.product.images.slice(1).map(img => {
+                    renderImage.push(<div className="col-md-4"><Image imageType="thumb" src={img}/></div>)
+                })
 
-  console.log()
-      console.log(this.state.product.images.length)
-        console.log(this.state.product.images)
+            }
 
-        let renderImage =[];
-      if(this.state.product.images.length>0){
-              renderImage.push(<Image imageType="card" src={this.state.product.images[0]} />)
-          if(this.state.product.images.length>1){
-                  this.state.product.images.slice(1).map(img=>{
-                      renderImage.push(<div className="col-md-4"><Image  imageType="thumb" src={img} /></div>)
-                  })
-
-          }
-
-          }
-
+        }
 
 
         return (
             <Modal
-                header='Create Category'
+                header='Product'
                 fixedFooter
                 id="productModal"
                 actions={
                     <div>
-                        <Button  onClick={this.createProduct.bind(this)} waves='green'>Create</Button>
+                        <Button onClick={this.createProduct.bind(this)} waves='green'>Create</Button>
                         <Button id="closeProductModal" modal="close" onClick={this.clearForm.bind(this)} waves='red'>Cancel</Button>
                     </div>
                 }
@@ -135,52 +130,52 @@ class CrateProduct extends React.Component {
                 }>
                 <div className="row">
                     <div className="col-md-6 ">
-                    <div className="inputContainer ">
-                        <Input
-                            value={this.state.product.name}
-                            onChange={this.handleInputChange.bind(this)}
-                            type="text"
-                            label="Product name"
-                            name='name'/>
-                        <span className="error">{this.state.error.name || ''}</span>
-                    </div>
+                        <div className="inputContainer ">
+                            <Input
+                                value={this.state.product.name}
+                                onChange={this.handleInputChange.bind(this)}
+                                type="text"
+                                label="Product name"
+                                name='name'/>
+                            <span className="error">{this.state.error.name || ''}</span>
+                        </div>
 
-                <div className="row">
-                    <div className="inputContainer">
-                        <Input
-                            value={this.state.product.description}
-                            onChange={this.handleInputChange.bind(this)}
-                            name='description'
-                            label="Product description"/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="inputContainer ">
-                        <Input value={this.state.product.category || ""}
-                               onChange={this.handleInputChange.bind(this)}
-                               name='category'
-                               type='select'
-                               label="Category"
-                               placeholder="Select category">
-                            {this.props.categories.map((category) =>
-                                <option key={category._id} value={category._id}>{category.name}</option>
-                            )}
-                        </Input>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="inputContainer col-md-6">
-                        <Input
-                            value={this.state.product.price}
-                            onChange={this.handleInputChange.bind(this)}
-                            name='price'
-                            type='number'
-                            label="Product price"/>$
-                        <span className="error">{this.state.error.price || ''}</span>
-                    </div>
-                    <input id="image" type="file" name="file"/>
-                    <Button onClick={this.uploadImage.bind(this) } waves='green'>Upload</Button>
-                </div>
+                        <div className="row">
+                            <div className="inputContainer">
+                                <Input
+                                    value={this.state.product.description}
+                                    onChange={this.handleInputChange.bind(this)}
+                                    name='description'
+                                    label="Product description"/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="inputContainer ">
+                                <Input value={this.state.product.category || ""}
+                                       onChange={this.handleInputChange.bind(this)}
+                                       name='category'
+                                       type='select'
+                                       label="Category"
+                                       placeholder="Select category">
+                                    {this.props.categories.map((category) =>
+                                        <option key={category._id} value={category._id}>{category.name}</option>
+                                    )}
+                                </Input>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="inputContainer col-md-6">
+                                <Input
+                                    value={this.state.product.price}
+                                    onChange={this.handleInputChange.bind(this)}
+                                    name='price'
+                                    type='number'
+                                    label="Product price"/>$
+                                <span className="error">{this.state.error.price || ''}</span>
+                            </div>
+                            <input id="image" type="file" name="file"/>
+                            <Button onClick={this.uploadImage.bind(this) } waves='green'>Upload</Button>
+                        </div>
                     </div>
                     <div className="col-md-6">
                         {renderImage}

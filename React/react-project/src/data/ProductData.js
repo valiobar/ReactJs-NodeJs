@@ -13,7 +13,10 @@ class ProductData {
         console.log(JSON.stringify(product))
         return apiCalls.post(product,'admin/product/create',true)
  }
-
+    static fetchProducts(page){
+     console.log('Data '+ page)
+        return apiCalls.get('product/all?page='+page)
+    }
 
 }
 export default ProductData

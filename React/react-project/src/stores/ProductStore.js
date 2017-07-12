@@ -8,6 +8,7 @@ class ProductStore extends EventEmitter {
     eventTypes = {
         PRODUCT_CREATED: 'product_created',
         IMAGE_UPLOADED: 'image_uploaded',
+        PRODUCTS_FETCHED:'products_fetched'
     };
 
 
@@ -22,7 +23,7 @@ class ProductStore extends EventEmitter {
     }
 
     uploadImage(image) {
-        console.log(JSON.stringify(image));
+
         productData.uploadImage(image)
             .then((data) => {
                 console.log(data)
@@ -31,6 +32,15 @@ class ProductStore extends EventEmitter {
             .catch(error => console.log(error))
     }
 
+    fetchProducts(page){
+        productData.fetchProducts(page)
+            .then((data) => {
+                console.log(data)
+                this.emit(this.eventTypes.PRODUCTS_FETCHED, data)
+            })
+            .catch(error => console.log(error))
+
+    }
 
 
     handleAction(action) {
@@ -42,6 +52,10 @@ class ProductStore extends EventEmitter {
             }
             case ProductActions.types.UPLOAD_IMAGE: {
                 this.uploadImage(action.image);
+                break;
+            }
+            case ProductActions.types.FETCH_PRODUCTS: {
+                this.fetchProducts(action.page);
                 break;
             }
             default:

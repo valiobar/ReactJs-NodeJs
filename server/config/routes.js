@@ -10,7 +10,7 @@ module.exports = (app) => {
   app.post('/api/admin/category/create',bodyParser.json(),auth.adminAuth, controllers.category.categoryCreate)
   app.get('/api/admin/category/all',bodyParser.json(),auth.adminAuth, controllers.category.gatAll)
   app.post('/api/admin/product/create',bodyParser.json(),auth.adminAuth, controllers.products.productCreate)
-
+   app.get('/api/product/all',bodyParser.json(), controllers.products.gatAll)
 
 
 

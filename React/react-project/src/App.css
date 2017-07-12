@@ -39,3 +39,7 @@
 span.caret{
  border: none;
 }
+.centeredDiv{
+  display: table;
+  margin: 0 auto;
+}

@@ -152,8 +152,8 @@ class CategoryForm extends React.Component {
                                type='select'
                                label="Parent Category"
                                placeholder="Select parent category">
-                            {this.props.categories.map((category) =>
-                                <option key={category._id} value={category._id}>{category.name}</option>
+                            {this.props.categories.map((categorySelsec) =>
+                                <option key={categorySelsec._id} value={categorySelsec._id}>{categorySelsec.name}</option>
                             )}
                         </Input>
                     </div>

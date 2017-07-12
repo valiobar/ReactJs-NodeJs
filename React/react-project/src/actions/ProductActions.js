@@ -5,6 +5,7 @@ import categoryStore from '../stores/CategoryStore'
 const categoryActions = {
     types: {
         UPLOAD_IMAGE: 'UPLOAD_IMAGE',
+        FETCH_PRODUCTS:'FETCH_PRODUCTS',
         CREATE_PRODUCT: 'CREATE_PRODUCT',
     },
     createProduct(product){
@@ -15,9 +16,14 @@ const categoryActions = {
         })
     },
 
-
+    fetchProducts(page){
+        dispatcher.dispatch({
+            type: this.types.FETCH_PRODUCTS,
+             page
+        })
+    },
     uploadImage(image){
-        console.log(image)
+
         dispatcher.dispatch({
             type: this.types.UPLOAD_IMAGE,
             image

@@ -17,8 +17,6 @@ class Image extends React.Component {
                 urlOptions = '/w_1000,c_scale';
 
         }
-
-
         let lastIndexOf = src.lastIndexOf('/');
         let firsPart =src.slice(0,src.slice(0, lastIndexOf).lastIndexOf('/'))
 
