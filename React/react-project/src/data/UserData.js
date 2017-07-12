@@ -13,6 +13,10 @@ class UserData {
 
     }
 
+    static addToBasket(data){
+        return apiCalls.post(data,'user/cart',true)
+    }
+
 
 }
 export default UserData

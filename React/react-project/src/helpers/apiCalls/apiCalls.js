@@ -24,7 +24,7 @@ export default  {
                     return res.json()
                 })
                 .then((json) => {
-                    console.log(json)
+
                     resolve(json)
                 })
                 .catch(error => reject(error))
@@ -32,7 +32,7 @@ export default  {
         })
     },
     get: (url, isAuth) => {
-        console.log('api get')
+
         let header = headers(isAuth);
 
         return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export default  {
                     return res.json()
                 })
                 .then((json) => {
-                    console.log(json)
+
                     resolve(json)
                 })
                 .catch(error => reject(error))
@@ -57,7 +57,7 @@ export default  {
     },
 
     uploadImage: (file) => {
-        console.log('upload: ' + file)
+
         return new Promise((resolve, reject) => {
 
             let url = "https://api.cloudinary.com/v1_1/dqyb8sdlc/image/upload"

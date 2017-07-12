@@ -5,7 +5,8 @@ import userstore from '../stores/UserStore'
 const userActions = {
     types: {
         REGISTER_USER: 'REGISTER_USER',
-        LOGIN_USER:'LOGIN_USER'
+        LOGIN_USER:'LOGIN_USER',
+        ADD_TO_BASKET:'ADD_TO_BASKET'
     },
     register(user){
         console.log(userstore)
@@ -19,6 +20,13 @@ const userActions = {
         dispatcher.dispatch({
             type: 'LOGIN_USER',
             credentials
+        })
+    },
+    addToUserBasket(data){
+        console.log(data)
+        dispatcher.dispatch({
+            type: 'ADD_TO_BASKET',
+            data
         })
     }
 }

@@ -7,14 +7,15 @@ import userData from '../data/UserData'
 class UserStore extends EventEmitter {
     evetTypes = {
         USER_REGISTERD: 'user_registered',
-        USER_LOGED:'USER_LOGED'
+        USER_LOGED: 'USER_LOGED',
+        ITEM_ADDED_TO_BASKET: 'item_added_to_basket'
     };
 
-    loginUser(credentials){
+    loginUser(credentials) {
         console.log('store')
         console.log(credentials)
         userData.login(credentials)
-            .then(data=>{
+            .then(data=> {
                 console.log(data)
                 this.emit(this.evetTypes.USER_LOGED, data)
             })
@@ -23,9 +24,19 @@ class UserStore extends EventEmitter {
     registerUser(user) {
         console.log('reg store');
         userData.registerUser(user)
-            .then((data)=>{
+            .then((data)=> {
 
-                this.emit(this.evetTypes.USER_REGISTERD, data)})
+                this.emit(this.evetTypes.USER_REGISTERD, data)
+            })
+            .catch(error=>console.log(error))
+    }
+
+    addToBasket(data) {
+
+        userData.addToBasket(data)
+            .then((data)=> {
+                this.emit(this.evetTypes.ITEM_ADDED_TO_BASKET, data)
+            })
             .catch(error=>console.log(error))
     }
 
@@ -34,10 +45,15 @@ class UserStore extends EventEmitter {
         switch (action.type) {
             case UserAction.types.REGISTER_USER: {
                 this.registerUser(action.user);
-                break;}
+                break;
+            }
             case UserAction.types.LOGIN_USER: {
-                    this.loginUser(action.credentials);
-                    break;
+                this.loginUser(action.credentials);
+                break;
+            }
+            case UserAction.types.ADD_TO_BASKET: {
+                this.addToBasket(action.data)
+                break;
             }
             default:
                 break

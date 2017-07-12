@@ -42,6 +42,8 @@ class Header extends React.Component {
                         <li><Link to="/">Page 2</Link></li>
                     </ul>
                     {Auth.isUserAuthenticated() ? (<ul className="nav navbar-nav navbar-right">
+                        <li><div >
+                            <span className="glyphicon glyphicon-user"></span>  Cart</div></li>
                         <li><Link to="/user/profile">
                             <span className="glyphicon glyphicon-user"></span> {this.state.username}</Link></li>
                         <li><Link to="/user/logout">

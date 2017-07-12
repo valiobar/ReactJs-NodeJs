@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const encryption = require('../utilities/encryption')
+
 const ObjectId =mongoose.Schema.Types.ObjectId;
 
 const REQUIRED_VALIDATION_MESSAGE = '{PATH} is required'

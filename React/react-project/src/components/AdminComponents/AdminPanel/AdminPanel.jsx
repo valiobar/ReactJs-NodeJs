@@ -44,8 +44,6 @@ class AdminPanel extends React.Component {
     }
     componentWillMount() {
         categoryActions.gatAll()
-
-
     }
 
 
