@@ -1,5 +1,6 @@
 const encryption = require('../utilities/encryption')
 const User = require('../data/User')
+const Order = require('../data/Order')
 const passport = require('passport')
 const validator = require('validator')
 const Product = require('mongoose').model('Product')
@@ -111,16 +112,32 @@ module.exports = {
     createOrder(req, res){
         let userId = req.body.userId
         let total=0;
+        let order ={
+            products:[],
+            client,
+            totalSum:0
+        }
         console.log(userId)
         User.findById(userId)
             .then(user => {
+                order.client.push(user._id)
                 let basket = user.shoppingBasket
                 let itemsPromises = []
                 basket.map(itemId=>itemsPromises.push(Product.findById(itemId)))
                 Promise.all(itemsPromises).then(items=> {
                   items.map(item=>{
-                      tota
+                      order.totalSum=+item.price
+                      order.products.push(item._id)
                   })
+                    Order.create(order).then(order=>{
+                        return res.status(200).json({
+                            success: true,
+                            message: 'You have successfully submitOrder ',
+                            data:order
+                        })
+                        }
+
+                    )
                 })
 
 

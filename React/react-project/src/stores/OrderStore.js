@@ -16,7 +16,7 @@ class OrderStore extends EventEmitter {
         orderData.createOrder(userId)
             .then((data) => {
                 console.log(data)
-                this.emit(this.eventTypes.PRODUCT_CREATED, data)
+                this.emit(this.eventTypes.ORDER_CREATED, data)
             })
             .catch(error => console.log(error))
     }
