@@ -1,4 +1,4 @@
-import urls from '../helpers/appURLs'
+
 import apiCalls from '../helpers/apiCalls/apiCalls'
 
 class UserData {
@@ -11,6 +11,11 @@ class UserData {
     static registerUser(user){
         return apiCalls.post(user,'users/register')
 
+    }
+
+   static getUser(userId){
+        console.log('USER DATAT '+userId)
+        return apiCalls.get('user/profile/'+userId,true)
     }
 
     static addToBasket(data){

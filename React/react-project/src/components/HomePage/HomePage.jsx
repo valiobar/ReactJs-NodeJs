@@ -7,11 +7,15 @@ import userAction from '../../actions/UserActions'
 import toastr from 'toastr'
 import orderStore from '../../stores/OrderStore'
 import orderAction from '../../actions/OrderActions'
-
+import {Input, Button, Modal} from 'react-materialize'
+import $ from 'jquery'
+import ShoppingBasket from '../../components/UserComponents/ShoppingBasket'
 class HomePage extends React.Component{
   constructor(props){
     super(props)
-
+      this.state={
+        showBasket:false
+      }
 
 
 
@@ -32,6 +36,7 @@ class HomePage extends React.Component{
       toastr.error(data.message)
       return
     }
+    this.setState({showBasket:false})
     toastr.success(data.message)
 
   }
@@ -63,9 +68,18 @@ class HomePage extends React.Component{
 
 
   }
+  showBasket(){
+    let currensShowBasket = this.state.showBasket
+    this.setState({showBasket:!currensShowBasket})
+  }
   render(){
     return (
-      <div className={styles.container}>HomePage
+      <div className={styles.container}>
+        {this.state.showBasket&&(<div className="basket"><ShoppingBasket onCheckOutClick={this.checkOut.bind(this)}/> </div>)}
+
+
+        <Button className='white' onClick={this.showBasket.bind(this)}
+                waves='green'>Shopping Cart</Button>
       <ProductList checkout={this.checkOut.bind(this)} addToBasket={this.onAddToBasket.bind(this)} listType="card" />
 
       </div>

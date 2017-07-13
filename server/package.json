@@ -9,6 +9,9 @@
   "keywords": [
     "system"
   ],
+  "engines": {
+    "node": "6.10.3"
+  },
   "author": "Ivaylo Kenov",
   "license": "MIT",
   "dependencies": {

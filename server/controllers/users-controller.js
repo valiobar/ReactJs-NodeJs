@@ -130,6 +130,8 @@ module.exports = {
                         order.products.push(item._id)
                     })
                     Order.create(order).then(order=> {
+                        user.shoppingBasket=[]
+                        user.save().then(user=>console.log(user))
                         return res.status(200).json({
                             success: true,
                             message: 'You have successfully submit Order ',
@@ -201,8 +203,30 @@ module.exports = {
     }),
 
     getProfile: (req, res)=> {
-        res.json("uhuuu")
+        let userId = req.params.id
+        User.findById(userId).then(user=>{
+            let userModel ={
+                email:user.email,
+                firstName:user.firstName,
+                lastName:user.lastName,
+                shoppingBasket:[]
+            }
 
-    }
+            let basket = user.shoppingBasket
+            let itemsPromises = []
+            basket.map(itemId=>itemsPromises.push(Product.findById(itemId)))
+            Promise.all(itemsPromises).then(items=> {
+             userModel.shoppingBasket=items
+            console.log(userModel)
+            return res.status(200).json({
+                success: true,
+                message: 'You have successfully fetch user data !',
+               data:userModel
+            })
 
-}
+        })
+            .catch(err=>console.log(err))
+
+    })
+
+}}

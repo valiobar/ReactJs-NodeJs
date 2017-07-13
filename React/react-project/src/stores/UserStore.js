@@ -8,7 +8,8 @@ class UserStore extends EventEmitter {
     evetTypes = {
         USER_REGISTERD: 'user_registered',
         USER_LOGED: 'USER_LOGED',
-        ITEM_ADDED_TO_BASKET: 'item_added_to_basket'
+        ITEM_ADDED_TO_BASKET: 'item_added_to_basket',
+        USER_FETCHED: 'user_fetched'
     };
 
     loginUser(credentials) {
@@ -40,6 +41,14 @@ class UserStore extends EventEmitter {
             .catch(error=>console.log(error))
     }
 
+    getUser(userId) {
+        userData.getUser(userId)
+            .then(data=> {
+                this.emit(this.evetTypes.USER_FETCHED, data)
+            })
+            .catch(error=>console.log(error))
+    }
+
     handleAction(action) {
         console.log('reg store' + action);
         switch (action.type) {
@@ -53,6 +62,10 @@ class UserStore extends EventEmitter {
             }
             case UserAction.types.ADD_TO_BASKET: {
                 this.addToBasket(action.data)
+                break;
+            }
+            case UserAction.types.GET_USER: {
+                this.getUser(action.userId)
                 break;
             }
             default:

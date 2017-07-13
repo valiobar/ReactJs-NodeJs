@@ -6,7 +6,15 @@ const userActions = {
     types: {
         REGISTER_USER: 'REGISTER_USER',
         LOGIN_USER:'LOGIN_USER',
-        ADD_TO_BASKET:'ADD_TO_BASKET'
+        ADD_TO_BASKET:'ADD_TO_BASKET',
+        GET_USER:'GET_USER'
+    },
+
+    getUser(userId){
+        dispatcher.dispatch({
+            type: 'GET_USER',
+            userId
+        })
     },
     register(user){
         console.log(userstore)

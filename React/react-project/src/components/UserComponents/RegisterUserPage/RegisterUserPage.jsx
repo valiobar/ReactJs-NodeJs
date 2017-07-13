@@ -70,7 +70,7 @@ class RegisterUserPage extends React.Component {
          return
      }
         toastr.success(data.message)
-        this.props.history.push('user/login')
+        this.props.history.push('login')
 
     }
 

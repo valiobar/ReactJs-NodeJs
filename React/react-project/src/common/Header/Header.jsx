@@ -2,6 +2,9 @@ import React from 'react'
 import Auth from '../appRouter/Auth'
 import {Link} from 'react-router-dom'
 import userStore from '../../stores/UserStore'
+
+import toastr from 'toastr'
+
 class Header extends React.Component {
     constructor(props) {
         super(props)
@@ -28,9 +31,14 @@ class Header extends React.Component {
     componentWillUnmount() {
         userStore.removeListener(userStore.evetTypes.USER_LOGED, this.handelUserLoggedIn)
     }
+showToastr(){
+
+
+}
 
     render() {
         return (
+<div>
 
             <nav className="navbar navbar-inverse">
                 <div className="container-fluid">
@@ -41,16 +49,15 @@ class Header extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <Link to="/" className="navbar-brand">WebSiteName</Link>
+                        <Link to="/" ><img src="https://res.cloudinary.com/dqyb8sdlc/image/upload/c_thumb,w_50,h_50/gjgf7uh23z4w7rjyak8x.png" alt=""/></Link>
                     </div>
                     <div className="collapse navbar-collapse" id="myNav">
                     <ul className="nav navbar-nav">
-                        <li className="active"><Link to="/">Home</Link></li>
+                        <li><Link to="/">Home</Link></li>
 
                     </ul>
                     {Auth.isUserAuthenticated() ? (<ul className="nav navbar-nav navbar-right">
-                        <li><div >
-                            <span className="glyphicon glyphicon-user"></span>  Cart</div></li>
+
                         <li><Link to="/user/profile">
                             <span className="glyphicon glyphicon-user"></span> {this.state.username}</Link></li>
                         <li><Link to="/user/logout">
@@ -78,7 +85,7 @@ class Header extends React.Component {
             </nav>
 
 
-
+</div>
 
 
         )

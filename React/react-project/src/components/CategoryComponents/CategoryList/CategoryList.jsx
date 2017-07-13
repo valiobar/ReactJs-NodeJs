@@ -8,15 +8,20 @@ class CategoryList extends React.Component {
 
     constructor(props) {
         super(props)
-
+        this.state={
+            addedCategory:''
+        }
 
         this.renderCategory = this.renderCategory.bind(this)
     }
+updataCat(item){
+    this.setState({addedCategory:item.name})
+}
 
     renderCategory(category, indentation) {
         this.renderlist.push((
             <CollapsibleItem header={category.name} key={category._id} style={{marginLeft: 15 * indentation + 'px'}}>
-                <ItemComponent item={category} onClickButton={this.props.onCategorySelect}></ItemComponent>
+                <ItemComponent update={this.updataCat.bind(this)} item={category} onClickButton={this.props.onCategorySelect}></ItemComponent>
             </CollapsibleItem>))
 
         if (category.subCategories) {
@@ -67,11 +72,17 @@ const ItemComponent = (props) => {
     let item = props.item;
     let productsCount = item.products.length
     let buttonTriger = props.onClickButton;
+    let upadet= this.props.update
 
     return (
         <div>
             <h6>{item.name}</h6> <span>Product : {productsCount}</span>
-            <Button modal="confirm" onClick={() => buttonTriger(item) } waves='green'>Edit</Button>
+            <Button modal="confirm" onClick={
+                () =>{ buttonTriger(item)
+                    upadet(item)
+                }
+            }
+                    waves='green'>Edit</Button>
         </div>
     );
 }
